@@ -112,7 +112,6 @@ public class Demeter {
             String check = super.done ? "[X] " : "[ ] ";
             return "[D]" + check + super.name + this.timeInfo;
         }
-
     }
 
     public static class Event extends Task {
