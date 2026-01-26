@@ -125,6 +125,5 @@ public class Demeter {
             String check = super.done ? "[X] " : "[ ] ";
             return "[E]" + check + super.name + this.timeInfo;
         }
-
     }
 }
