@@ -38,17 +38,17 @@ public class Demeter {
                 }
 
             } else if (input.startsWith("todo")) {
-                lst[Task.idx] = new Task(input.substring(5), "T", "", false);
+                lst[Task.idx] = new Todo(input.substring(5),  false);
                 printAdd(lst[Task.idx - 1].printTask());
 
             } else if (input.startsWith("deadline")) {
                 String[] parts = input.split(" /by ");
-                lst[Task.idx] = new Task(parts[0].substring(9), "D", " (by: " + parts[1] + ")", false);
+                lst[Task.idx] = new Deadline(parts[0].substring(9), false, " (by: " + parts[1] + ")");
                 printAdd(lst[Task.idx - 1].printTask());
 
             } else if (input.startsWith("event")) {
                 String[] parts = input.split(" /from | /to ");
-                lst[Task.idx] = new Task(parts[0].substring(6), "E", " (from: " + parts[1] + " to: " + parts[2] + ")", false);
+                lst[Task.idx] = new Event(parts[0].substring(6), false, " (from: " + parts[1] + " to: " + parts[2] + ")");
                 printAdd(lst[Task.idx - 1].printTask());
 
             } else {
@@ -60,28 +60,22 @@ public class Demeter {
     }
 
     private static void printAdd(String task) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
+        System.out.println("Got it. I've added this task:\n  " + task);
         System.out.println("Now you have " + (Task.idx) + " tasks in the list.");
     }
 
     public static class Task {
         private String name;
-        private String taskType;
-        private String timeInfo;
         private boolean done;
         public static int idx = 0;
         private int id;
-        public Task(String name, String taskType, String timeInfo, boolean done) {
+        public Task(String name, boolean done) {
             this.name = name;
-            this.taskType = taskType;
-            this.timeInfo = timeInfo;
             this.done = done;
             this.id = idx ++;
         }
         public String printTask() {
-            String check = this.done ? "[X] " : "[ ] ";
-            return "[" + this.taskType + "]" + check + this.name + this.timeInfo;
+            return "";
         }
         public int getId() {
             return this.id;
@@ -94,5 +88,44 @@ public class Demeter {
         public void unmark() {
             this.done = false;
         }
+    }
+
+    public static class Todo extends Task {
+        public Todo(String name, boolean done) {
+            super(name, done);
+        }
+
+        public String printTask() {
+            String check = super.done ? "[X] " : "[ ] ";
+            return "[T]" + check + super.name;
+        }
+    }
+
+    public static class Deadline extends Task {
+        private String timeInfo;
+        public Deadline(String name, boolean done, String timeInfo) {
+            super(name, done);
+            this.timeInfo = timeInfo;
+        }
+
+        public String printTask() {
+            String check = super.done ? "[X] " : "[ ] ";
+            return "[D]" + check + super.name + this.timeInfo;
+        }
+
+    }
+
+    public static class Event extends Task {
+        private String timeInfo;
+        public Event(String name, boolean done, String timeInfo) {
+            super(name, done);
+            this.timeInfo = timeInfo;
+        }
+
+        public String printTask() {
+            String check = super.done ? "[X] " : "[ ] ";
+            return "[E]" + check + super.name + this.timeInfo;
+        }
+
     }
 }
