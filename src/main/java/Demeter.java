@@ -3,41 +3,96 @@ import java.util.Scanner;
 public class Demeter {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String[] lst = new String[100];
-        boolean[] done = new boolean[100];
-        int idx = 0;
+        Task[] lst = new Task[100];
+
         System.out.println("Hello! I'm Demeter.\nWhat can I do for you? \n");
+
         while (true) {
             String input = sc.nextLine();
-            // System.out.println(input);
-
             if (input.equals("bye")) {
                 break;
+
             } else if (input.equals("list")) {
-                System.out.println("Here are the items in your list: \n");
-                for (int i = 0; i < idx; i++) {
+                System.out.println("Here are the tasks in your list: ");
+                for (int i = 0; i < Task.idx; i++) {
                     int line = i + 1;
-                    String check = "[ ] ";
-                    if (done[i]) {
-                        check = "[X] ";
-                    }
-                    System.out.println(line + ". " + check + lst[i]);
+                    System.out.println(line + ". " + lst[i].printTask());
                 }
+
             } else if (input.startsWith("mark")) {
                 int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
-                done[taskNum] = true;
-                System.out.println("Nice! I've marked this task as done: \n" + "  [X] " + lst[taskNum]);
+                for (int i = 0; i < Task.idx; i++) {
+                    if (lst[i].getId() == taskNum) {
+                        lst[i].mark();
+                        System.out.println("Nice! I've marked this task as done: \n  " + lst[i].printTask());
+                    }
+                }
+
             } else if (input.startsWith("unmark")) {
                 int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
-                done[taskNum] = false;
-                System.out.println("Ok, I've marked this task as not done yet: \n" + "  [ ] " + lst[taskNum]);
+                for (int i = 0; i < Task.idx; i++) {
+                    if (lst[i].getId() == taskNum) {
+                        lst[i].unmark();
+                        System.out.println("Ok, I've marked this task as not done yet: \n  " + lst[i].printTask());
+                    }
+                }
+
+            } else if (input.startsWith("todo")) {
+                lst[Task.idx] = new Task(input.substring(5), "T", "", false);
+                printAdd(lst[Task.idx - 1].printTask());
+
+            } else if (input.startsWith("deadline")) {
+                String[] parts = input.split(" /by ");
+                lst[Task.idx] = new Task(parts[0].substring(9), "D", " (by: " + parts[1] + ")", false);
+                printAdd(lst[Task.idx - 1].printTask());
+
+            } else if (input.startsWith("event")) {
+                String[] parts = input.split(" /from | /to ");
+                lst[Task.idx] = new Task(parts[0].substring(6), "E", " (from: " + parts[1] + " to: " + parts[2] + ")", false);
+                printAdd(lst[Task.idx - 1].printTask());
+
             } else {
-                lst[idx] = input;
-                idx += 1;
-                System.out.println("added: " + input);
+                System.out.println(input);
             }
         }
         System.out.println("Bye. Hope to see you again soon!");
         sc.close();
+    }
+
+    private static void printAdd(String task) {
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task);
+        System.out.println("Now you have " + (Task.idx) + " tasks in the list.");
+    }
+
+    public static class Task {
+        private String name;
+        private String taskType;
+        private String timeInfo;
+        private boolean done;
+        public static int idx = 0;
+        private int id;
+        public Task(String name, String taskType, String timeInfo, boolean done) {
+            this.name = name;
+            this.taskType = taskType;
+            this.timeInfo = timeInfo;
+            this.done = done;
+            this.id = idx ++;
+        }
+        public String printTask() {
+            String check = this.done ? "[X] " : "[ ] ";
+            return "[" + this.taskType + "]" + check + this.name + this.timeInfo;
+        }
+        public int getId() {
+            return this.id;
+        }
+
+        public void mark() {
+            this.done = true;
+        }
+
+        public void unmark() {
+            this.done = false;
+        }
     }
 }
