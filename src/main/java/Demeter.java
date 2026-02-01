@@ -45,7 +45,18 @@ public class Demeter {
                         }
                     }
                 }
-
+            } else if (input.startsWith("delete")) {
+                if (input.strip().equals("delete")) {
+                    error = "Oh dear, some fields are missing!";
+                } else {
+                    int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
+                    String deletedTask = lst[taskNum].printTask();
+                    Task.idx --;
+                    for (int i = taskNum; i < Task.idx - 1; i++) {
+                        lst[i] = lst[i + 1];
+                    }
+                    System.out.println("I've removed this task: \n" + deletedTask + "\nYou now have " + Task.idx + " tasks in the list.");
+                }
             } else if (input.startsWith("todo")) {
                 if (input.strip().equals("todo")) {
                     error = "Oh dear, some fields are missing!";
@@ -66,7 +77,7 @@ public class Demeter {
                     error = "Oh dear, some fields are missing!";
                 } else {
                     lst[Task.idx] = new Event(input.substring(6).split("/from")[0], false, input.strip().split("/from")[1].split("/to")[0], input.strip().split("/to")[1]);
-                    printAdd(lst[Task.idx-1].printTask());
+                    printAdd(lst[Task.idx - 1].printTask());
                 }
             } else {
                 error = "Sorry, I don't know what you mean.";
@@ -91,6 +102,6 @@ public class Demeter {
 
     private static void printAdd(String task) {
         System.out.println("Got it. I've added this task:\n  " + task);
-        System.out.println("Now you have " + (Task.idx) + " tasks in the list.");
+        System.out.println("Now you have " + Task.idx + " tasks in the list.");
     }
 }
