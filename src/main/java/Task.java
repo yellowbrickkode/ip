@@ -22,4 +22,8 @@ public class Task {
     public void unmark() {
         this.done = false;
     }
+
+    public String printToFile() {
+        return null;
+    }
 }
