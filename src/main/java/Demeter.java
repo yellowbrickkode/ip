@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class Demeter {
 
     static Path file = Paths.get("data", "duke.txt");
-    private final static String files = "./data/todolist.txt";
 
     public static void main(String[] args) throws DemeterExceptions {
         Scanner sc = new Scanner(System.in);
@@ -154,7 +153,7 @@ public class Demeter {
                 String[] parts = line.split(" \\| ");
 
                 String type = parts[0];
-                boolean isDone = parts[1].equals("1");
+                boolean isDone = parts[1].equals("0");
                 String description = parts[2];
 
                 switch (type) {
@@ -164,7 +163,7 @@ public class Demeter {
 
                     case "D":
                         String by = parts[3];
-                        taskList[Task.idx] = new Deadline(description, isDone, by);
+                        taskList[Task.idx] = new Deadline(description, isDone, by.trim());
                         break;
 
                     case "E":

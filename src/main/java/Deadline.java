@@ -1,18 +1,29 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task {
-    private String timeInfo;
-    public Deadline(String name, boolean done, String timeInfo) {
+    private LocalDate by;
+    public Deadline(String name, boolean done, String by) {
         super(name.trim(), done);
-        this.timeInfo = timeInfo;
+        try {
+            this.by = LocalDate.parse(by.trim());
+        } catch (Exception e) {
+            this.by = null;
+            System.out.println("Invalid date format! Use yyyy-MM-dd");
+        }
     }
 
     public String printTask() {
         String check = super.done ? "[X] " : "[ ] ";
-        return "[D]" + check + super.name + this.timeInfo;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return this.by == null
+                ? "[D]" + check + super.name + " (invalid date)"
+                : "[D]" + check + super.name + " (" + this.by.format(formatter) + ")";
     }
 
     public String printToFile() {
         return super.done
-                ? "D | 0 | " + super.name + " | " + this.timeInfo
-                : "D | 1 | " + super.name + " | " + this.timeInfo;
+                ? "D | 0 | " + super.name + " | " + this.by
+                : "D | 1 | " + super.name + " | " + this.by;
     }
 }
