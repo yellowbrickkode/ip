@@ -1,3 +1,5 @@
+package demeter;
+
 public class Todo extends Task {
     public Todo(String name, boolean done) {
         super(name.trim(), done);

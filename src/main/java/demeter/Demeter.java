@@ -1,4 +1,4 @@
-// Demeter.java
+package demeter;// demeter.Demeter.java
 import java.io.IOException;
 
 public class Demeter {

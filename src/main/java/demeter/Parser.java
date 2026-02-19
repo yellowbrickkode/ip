@@ -1,4 +1,6 @@
-// Parser.java
+package demeter;
+
+// demeter.Parser.java
 public class Parser {
 
     public boolean isExit(String input) {
