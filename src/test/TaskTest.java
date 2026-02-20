@@ -9,7 +9,7 @@ class TaskTest {
 
     @BeforeEach
     void resetIndex() {
-        Task.idx = 0; // reset static counter before each test
+        Task.idx = 0;
     }
 
     @Test

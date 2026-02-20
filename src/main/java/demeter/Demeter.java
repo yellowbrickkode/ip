@@ -58,6 +58,6 @@ public class Demeter {
      * @param args command-line arguments (not used).
      */
     public static void main(String[] args) {
-        new Demeter("data/duke.txt").run();
+        new Demeter("data/demeter.txt").run();
     }
 }
