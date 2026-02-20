@@ -1,6 +1,7 @@
 package demeter;
 
 public class Task {
+
     protected String name;
     protected boolean isDone;
     public static int idx = 0;

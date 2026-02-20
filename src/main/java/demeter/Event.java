@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
+
     private LocalDate from;
     private LocalDate to;
+
     public Event(String name, boolean isDone, String from, String to) {
         super(name.trim(), isDone);
         try {
