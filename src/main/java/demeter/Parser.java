@@ -3,11 +3,24 @@ package demeter;
 // demeter.Parser.java
 public class Parser {
 
+    /**
+     * Checks whether the given input is the exit command.
+     * @param input User input string.
+     * @return true if input is "bye", otherwise false.
+     */
     public boolean isExit(String input) {
         return input.equals("bye");
     }
 
-    public void execute(String input, TaskList tasks, Ui ui) throws DemeterExceptions {
+    /**
+     * Handles all user inputs.
+     * Supports commands: list, mark, unmark, delete, todo, deadline, event, find.
+     * @param input User input string.
+     * @param tasks List of all current tasks.
+     * @param ui the Ui instance for displaying messages to the user.
+     * @throws DemeterException if the input command is invalid or required fields are missing.
+     */
+    public void execute(String input, TaskList tasks, Ui ui) throws DemeterException {
         if (input.equals("list")) {
             ui.showTasks(tasks);
 
@@ -33,7 +46,7 @@ public class Parser {
 
         } else if (input.startsWith("deadline")) {
             if (!input.contains("/by")) {
-                throw new DemeterExceptions("Oh dear, some fields are missing!");
+                throw new DemeterException("Oh dear, some fields are missing!");
             }
             String[] parts = input.substring(9).split("/by");
             Task task = tasks.add(new Deadline(parts[0].trim(), false, parts[1].trim()));
@@ -41,7 +54,7 @@ public class Parser {
 
         } else if (input.startsWith("event")) {
             if (!input.contains("/from") || !input.contains("/to")) {
-                throw new DemeterExceptions("Oh dear, some fields are missing!");
+                throw new DemeterException("Oh dear, some fields are missing!");
             }
             String desc = input.substring(6).split("/from")[0].trim();
             String from = input.split("/from")[1].split("/to")[0].trim();
@@ -50,15 +63,15 @@ public class Parser {
             ui.showAdd(task, tasks.size());
 
         } else {
-            throw new DemeterExceptions("Sorry, I don't know what you mean.");
+            throw new DemeterException("Sorry, I don't know what you mean.");
         }
     }
 
-    private int getIndex(String input, String command) throws DemeterExceptions {
+    private int getIndex(String input, String command) throws DemeterException {
         try {
             return Integer.parseInt(input.split(" ")[1]) - 1;
         } catch (Exception e) {
-            throw new DemeterExceptions("Oh dear, some fields are missing!");
+            throw new DemeterException("Oh dear, some fields are missing!");
         }
     }
 }

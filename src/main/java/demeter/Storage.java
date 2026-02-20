@@ -14,6 +14,13 @@ public class Storage {
         this.filePath = Paths.get(filePath);
     }
 
+    /**
+     * Loads all tasks from hard disk into Demeter.
+     * If the file does not exist, returns an empty list.
+     *
+     * @return List of all tasks.
+     * @throws IOException if an IO error occurs while reading the file.
+     */
     public List<Task> load() throws IOException {
         List<Task> tasks = new ArrayList<>();
 
@@ -50,6 +57,13 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the given list of tasks to the hard disk.
+     * Creates any necessary directories if they do not exist.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @throws IOException if an IO error occurs while writing to the file.
+     */
     public void save(List<Task> tasks) throws IOException {
         Files.createDirectories(filePath.getParent());
         BufferedWriter writer = Files.newBufferedWriter(filePath);
