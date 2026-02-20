@@ -61,7 +61,16 @@ public class Parser {
             String to = input.split("/to")[1].trim();
             Task task = tasks.add(new Event(desc, false, from, to));
             ui.showAdd(task, tasks.size());
-
+        } else if (input.startsWith("find")) {
+            String keyword = input.substring(5).trim().toLowerCase();
+            int count = 1;
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                if (tasks.get(i).getName().toLowerCase().contains(keyword)) {
+                    System.out.println(count + ". " + tasks.get(i).printTask());
+                    count ++;
+                }
+            }
         } else {
             throw new DemeterException("Sorry, I don't know what you mean.");
         }

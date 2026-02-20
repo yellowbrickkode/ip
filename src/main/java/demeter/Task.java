@@ -1,22 +1,20 @@
 package demeter;
 
 public class Task {
-
     protected String name;
     protected boolean isDone;
     public static int idx = 0;
     private int id;
-
-    public Task(String name, boolean isDone) {
+    public Task(String name, boolean done) {
         this.name = name;
-        this.isDone = isDone;
+        this.isDone = done;
         this.id = idx ++;
     }
-
     public String printTask() {
         return "";
     }
 
+    public String getName() { return this.name; }
     public int getId() {
         return this.id;
     }
@@ -33,7 +31,5 @@ public class Task {
         return null;
     }
 
-    public boolean isDone() {
-        return this.isDone;
-    }
+    public boolean isDone() { return this.isDone; }
 }
