@@ -13,6 +13,8 @@ public class Task {
     public String printTask() {
         return "";
     }
+
+    public String getName() { return this.name; }
     public int getId() {
         return this.id;
     }
