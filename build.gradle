@@ -28,12 +28,20 @@ test {
 }
 
 application {
-    mainClass.set("seedu.duke.Duke")
+    mainClass.set("demeter.Demeter")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "demeter"
     archiveClassifier = null
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass
+        )
+    }
 }
 
 run{
