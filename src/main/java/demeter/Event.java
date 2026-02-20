@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
     private LocalDate from;
     private LocalDate to;
-    public Event(String name, boolean done, String from, String to) {
-        super(name.trim(), done);
+    public Event(String name, boolean isDone, String from, String to) {
+        super(name.trim(), isDone);
         try {
             this.from = LocalDate.parse(from.trim());
             this.to = LocalDate.parse(to.trim());
@@ -20,9 +20,10 @@ public class Event extends Task {
     }
 
     public String printTask() {
-        String check = super.isDone ? "[X] " : "[ ] ";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return "[E]" + check + super.name + " (" + this.from.format(formatter) + " - " + this.to.format(formatter) + ")";
+        return super.isDone
+                ? "[E][X] " + super.name + " (" + this.from.format(formatter) + " - " + this.to.format(formatter) + ")"
+                : "[E][ ] " + super.name + " (" + this.from.format(formatter) + " - " + this.to.format(formatter) + ")";
     }
 
     public String printToFile() {

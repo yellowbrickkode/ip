@@ -5,14 +5,17 @@ public class Task {
     protected boolean isDone;
     public static int idx = 0;
     private int id;
-    public Task(String name, boolean done) {
+
+    public Task(String name, boolean isDone) {
         this.name = name;
-        this.isDone = done;
+        this.isDone = isDone;
         this.id = idx ++;
     }
+
     public String printTask() {
         return "";
     }
+
     public int getId() {
         return this.id;
     }
@@ -29,5 +32,7 @@ public class Task {
         return null;
     }
 
-    public boolean isDone() { return this.isDone; }
+    public boolean isDone() {
+        return this.isDone;
+    }
 }

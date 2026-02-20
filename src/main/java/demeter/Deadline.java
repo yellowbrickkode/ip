@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
     private LocalDate by;
-    public Deadline(String name, boolean done, String by) {
-        super(name.trim(), done);
+    public Deadline(String name, boolean isDone, String by) {
+        super(name.trim(), isDone);
         try {
             this.by = LocalDate.parse(by.trim());
         } catch (Exception e) {
@@ -16,11 +16,14 @@ public class Deadline extends Task {
     }
 
     public String printTask() {
-        String check = super.isDone ? "[X] " : "[ ] ";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return this.by == null
-                ? "[D]" + check + super.name + " (invalid date)"
-                : "[D]" + check + super.name + " (" + this.by.format(formatter) + ")";
+                ? super.isDone
+                ? "[D][X] " + super.name + " (invalid date)"
+                : "[D][ ] " + super.name + " (invalid date)"
+                : super.isDone
+                ? "[D][X] " + super.name + " (" + this.by.format(formatter) + ")"
+                : "[D][ ] " + super.name + " (" + this.by.format(formatter) + ")";
     }
 
     public String printToFile() {

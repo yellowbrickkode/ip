@@ -1,13 +1,14 @@
 package demeter;
 
 public class Todo extends Task {
-    public Todo(String name, boolean done) {
-        super(name.trim(), done);
+    public Todo(String name, boolean isDone) {
+        super(name.trim(), isDone);
     }
 
     public String printTask() {
-        String check = super.isDone ? "[X] " : "[ ] ";
-        return "[T]" + check + super.name;
+        return super.isDone
+                ? "[T][X] " + super.name
+                : "[T][ ] " + super.name;
     }
 
     public String printToFile() {
