@@ -20,13 +20,13 @@ public class Event extends Task {
     }
 
     public String printTask() {
-        String check = super.done ? "[X] " : "[ ] ";
+        String check = super.isDone ? "[X] " : "[ ] ";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return "[E]" + check + super.name + " (" + this.from.format(formatter) + " - " + this.to.format(formatter) + ")";
     }
 
     public String printToFile() {
-        return super.done
+        return super.isDone
                 ? "E | 0 | " + super.name + " | " + this.from + " - " + this.to
                 : "E | 1 | " + super.name + " | " + this.from + " - " + this.to;
     }

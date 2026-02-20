@@ -2,12 +2,12 @@ package demeter;
 
 public class Task {
     protected String name;
-    protected boolean done;
+    protected boolean isDone;
     public static int idx = 0;
     private int id;
     public Task(String name, boolean done) {
         this.name = name;
-        this.done = done;
+        this.isDone = done;
         this.id = idx ++;
     }
     public String printTask() {
@@ -18,14 +18,16 @@ public class Task {
     }
 
     public void mark() {
-        this.done = true;
+        this.isDone = true;
     }
 
     public void unmark() {
-        this.done = false;
+        this.isDone = false;
     }
 
     public String printToFile() {
         return null;
     }
+
+    public boolean isDone() { return this.isDone; }
 }

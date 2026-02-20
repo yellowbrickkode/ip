@@ -16,7 +16,7 @@ public class Deadline extends Task {
     }
 
     public String printTask() {
-        String check = super.done ? "[X] " : "[ ] ";
+        String check = super.isDone ? "[X] " : "[ ] ";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return this.by == null
                 ? "[D]" + check + super.name + " (invalid date)"
@@ -24,7 +24,7 @@ public class Deadline extends Task {
     }
 
     public String printToFile() {
-        return super.done
+        return super.isDone
                 ? "D | 0 | " + super.name + " | " + this.by
                 : "D | 1 | " + super.name + " | " + this.by;
     }

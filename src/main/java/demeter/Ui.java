@@ -6,7 +6,7 @@ public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
     public void showWelcome() {
-        System.out.println("Hello! I'm demeter.Demeter.");
+        System.out.println("Hello! I'm Demeter.");
         System.out.println("What can I do for you?");
     }
 
