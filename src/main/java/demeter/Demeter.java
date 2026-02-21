@@ -12,12 +12,10 @@ public class Demeter {
      * Constructs a new Demeter application instance.
      * Initializes the user interface, storage, parser, and loads existing tasks from the given file path.
      * If loading fails, initializes with an empty task list.
-     *
-     * @param filePath the path to the file used for storing tasks
      */
-    public Demeter(String filePath) {
+    public Demeter() {
         ui = new Ui();
-        storage = new Storage(filePath);
+        storage = new Storage();
         parser = new Parser();
 
         try {
@@ -58,6 +56,13 @@ public class Demeter {
      * @param args command-line arguments (not used).
      */
     public static void main(String[] args) {
-        new Demeter("data/demeter.txt").run();
+        new Demeter().run();
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Duke heard: " + input;
     }
 }

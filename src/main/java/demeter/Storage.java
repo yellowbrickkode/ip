@@ -10,8 +10,8 @@ public class Storage {
 
     private final Path filePath;
 
-    public Storage(String filePath) {
-        this.filePath = Paths.get(filePath);
+    public Storage() {
+        this.filePath = Paths.get("data/demeter.txt");
     }
 
     /**
