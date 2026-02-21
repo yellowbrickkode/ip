@@ -63,6 +63,16 @@ public class Demeter {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
-        return "Duke heard: " + input;
+        if (parser.isExit(input)) {
+            return "Bye. Hope to see you again soon!";
+        }
+        try {
+            parser.execute(input, tasks, ui);   // runs your existing logic
+            storage.save(tasks.getTasks());     // auto-save like before
+            return ui.getLastMessage();         // return what Ui just displayed
+
+        } catch (DemeterException | IOException e) {
+            return e.getMessage();
+        }
     }
 }

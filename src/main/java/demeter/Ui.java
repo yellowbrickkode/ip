@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Ui {
 
     private final Scanner scanner = new Scanner(System.in);
+    private String lastMessage;
 
     /**
      * Displays the welcome message.
@@ -13,11 +14,15 @@ public class Ui {
         System.out.println("What can I do for you?");
     }
 
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
     /**
      * Displays the goodbye message on exit.
      */
     public void showBye() {
-        System.out.println("Bye. Hope to see you again soon!");
+        lastMessage = "Bye. Hope to see you again soon!";
     }
 
     /**
@@ -35,10 +40,11 @@ public class Ui {
      * @param tasks List of tasks to be displayed.
      */
     public void showTasks(TaskList tasks) {
-        System.out.println("Here are the tasks in your list:");
+        lastMessage = "Here are the tasks in your list:";
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i).printTask());
+            lastMessage += "\n" + (i + 1) + ". " + tasks.get(i).printTask();
         }
+
     }
 
     /**
@@ -48,9 +54,9 @@ public class Ui {
      * @param size Total number of tasks in the list after addition.
      */
     public void showAdd(Task task, int size) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task.printTask());
-        System.out.println("Now you have " + size + " tasks in the list.");
+        lastMessage = "Got it. I've added this task:\n"
+                + "  " + task.printTask() + "\n"
+                + "Now you have " + size + " tasks in the list.";
     }
 
     /**
@@ -60,9 +66,9 @@ public class Ui {
      * @param size Total number of tasks in the list after deletion.
      */
     public void showDelete(Task task, int size) {
-        System.out.println("I've removed this task:");
-        System.out.println("  " + task.printTask());
-        System.out.println("Now you have " + size + " tasks in the list.");
+        lastMessage = "I've removed this task:\n"
+                + "  " + task.printTask() + "\n"
+                + "Now you have " + size + " tasks in the list.";
     }
 
     /**
@@ -71,8 +77,8 @@ public class Ui {
      * @param task Task to be marked as completed.
      */
     public void showMark(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  " + task.printTask());
+        lastMessage = "Nice! I've marked this task as done:"
+                + "\n  " + task.printTask();
     }
 
     /**
@@ -81,8 +87,19 @@ public class Ui {
      * @param task Task to be marked as incomplete.
      */
     public void showUnmark(Task task) {
-        System.out.println("Ok, I've marked this task as not done yet:");
-        System.out.println("  " + task.printTask());
+        lastMessage = "Ok, I've marked this task as not done yet:\n"
+                + "  " + task.printTask();
+    }
+
+    /**
+     * Stores a message to be displayed to the user.
+     * The message can later be retrieved via {@code getLastMessage()}
+     * for rendering in the GUI.
+     *
+     * @param message The message to be shown to the user.
+     */
+    public void showMessage(String message) {
+        lastMessage = message;
     }
 
     /**
@@ -91,13 +108,13 @@ public class Ui {
      * @param message Error message to be displayed.
      */
     public void showError(String message) {
-        System.out.println(message);
+        lastMessage = message;
     }
 
     /**
      * Display error message when file fails to load.
      */
     public void showLoadingError() {
-        System.out.println("Error loading file. Starting with empty task list.");
+        lastMessage = "Error loading file. Starting with empty task list.";
     }
 }

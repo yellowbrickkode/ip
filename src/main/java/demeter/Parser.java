@@ -63,14 +63,25 @@ public class Parser {
             ui.showAdd(task, tasks.size());
         } else if (input.startsWith("find")) {
             String keyword = input.substring(5).trim().toLowerCase();
+            StringBuilder result = new StringBuilder();
+
+            result.append("Here are the matching tasks in your list:");
+
             int count = 1;
-            System.out.println("Here are the matching tasks in your list:");
             for (int i = 0; i < tasks.size(); i++) {
                 if (tasks.get(i).getName().toLowerCase().contains(keyword)) {
-                    System.out.println(count + ". " + tasks.get(i).printTask());
-                    count ++;
+                    result.append("\n")
+                            .append(count)
+                            .append(". ")
+                            .append(tasks.get(i).printTask());
+                    count++;
                 }
             }
+            if (count == 1) {
+                result.append("\nNo matching tasks found.");
+            }
+
+            ui.showMessage(result.toString());
         } else {
             throw new DemeterException("Sorry, I don't know what you mean.");
         }
