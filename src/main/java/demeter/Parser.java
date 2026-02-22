@@ -3,7 +3,7 @@ package demeter;
 public class Parser {
 
     public boolean isExit(String input) {
-        return "bye".equals(input);
+        return input.equals("bye");
     }
 
     public void execute(String input, TaskList tasks, Ui ui) throws DemeterException {
