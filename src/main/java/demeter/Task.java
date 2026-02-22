@@ -1,10 +1,11 @@
 package demeter;
 
-public class Task {
+public abstract class Task {
     protected String name;
     protected boolean isDone;
     public static int idx = 0;
     private int id;
+
     public Task(String name, boolean done) {
         assert !name.isEmpty() : "Task name should not be empty";
         this.name = name;
@@ -16,6 +17,7 @@ public class Task {
     }
 
     public String getName() { return this.name; }
+
     public int getId() {
         return this.id;
     }
@@ -33,4 +35,6 @@ public class Task {
     }
 
     public boolean isDone() { return this.isDone; }
+
+    public abstract Task copy();
 }

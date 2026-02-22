@@ -30,7 +30,16 @@ public class Deadline extends Task {
 
     public String printToFile() {
         return super.isDone
-                ? "D | 0 | " + super.name + " | " + this.by
-                : "D | 1 | " + super.name + " | " + this.by;
+                ? "D | 1 | " + super.name + " | " + this.by
+                : "D | 0 | " + super.name + " | " + this.by;
+    }
+
+    public LocalDate getBy() {
+        return this.by;
+    }
+
+    @Override
+    public Task copy() {
+        return new Deadline(this.getName(), this.isDone(), this.getBy().toString());
     }
 }

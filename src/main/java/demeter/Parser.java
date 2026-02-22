@@ -1,5 +1,8 @@
 package demeter;
 
+import java.util.Stack;
+import java.util.ArrayList;
+
 public class Parser {
 
     public boolean isExit(String input) {
@@ -7,14 +10,14 @@ public class Parser {
         return input.equals("bye");
     }
 
-    public void execute(String input, TaskList tasks, Ui ui) throws DemeterException {
+    public void execute(Stack<TaskList> history, String input, TaskList tasks, Ui ui) throws DemeterException {
 
         assert input != null : "Input to execute() should not be null";
         assert tasks != null : "TaskList should be initialised before parsing";
         assert ui != null : "Ui should be initialised before parsing";
 
         String[] parts = input.trim().split(" ", 2);
-        String command = parts[0];   // e.g., "mark", "todo", "deadline", etc.
+        String command = parts[0];
         String args = parts.length > 1 ? parts[1].trim() : "";
 
         switch (command) {
@@ -22,25 +25,34 @@ public class Parser {
             ui.showTasks(tasks);
             break;
         case "mark":
+            history.push(copyTaskList(tasks));
             handleMark(args, tasks, ui);
             break;
         case "unmark":
+            history.push(copyTaskList(tasks));
             handleUnmark(args, tasks, ui);
             break;
         case "delete":
+            history.push(copyTaskList(tasks));
             handleDelete(args, tasks, ui);
             break;
         case "todo":
+            history.push(copyTaskList(tasks));
             handleTodo(args, tasks, ui);
             break;
         case "deadline":
+            history.push(copyTaskList(tasks));
             handleDeadline(args, tasks, ui);
             break;
         case "event":
+            history.push(copyTaskList(tasks));
             handleEvent(args, tasks, ui);
             break;
         case "find":
             handleFind(args, tasks, ui);
+            break;
+        case "undo":
+            handleUndo(history, tasks, ui);
             break;
         default:
             throw new DemeterException("Sorry, I don't know what you mean.");
@@ -125,6 +137,19 @@ public class Parser {
         ui.showMessage(result.toString());
     }
 
+    private void handleUndo(Stack<TaskList> history, TaskList tasks, Ui ui) {
+        if (history.isEmpty()) {
+            ui.showMessage("Nothing to undo!");
+        } else {
+            TaskList previous = history.pop();
+
+            tasks.getTasks().clear();
+            tasks.getTasks().addAll(previous.getTasks());
+
+            ui.showMessage("Restored to previous state!");
+        }
+    }
+
     private int getIndex(String arg) throws DemeterException {
         assert arg != null : "Input to getIndex() should not be null";
         try {
@@ -134,5 +159,13 @@ public class Parser {
         } catch (Exception e) {
             throw new DemeterException("Oh dear, some fields are missing!");
         }
+    }
+
+    private TaskList copyTaskList(TaskList tasks) {
+        ArrayList<Task> copied = new ArrayList<>();
+        for (Task t : tasks.getTasks()) {
+            copied.add(t.copy());
+        }
+        return new TaskList(copied);
     }
 }

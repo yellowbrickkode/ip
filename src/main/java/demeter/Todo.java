@@ -14,7 +14,12 @@ public class Todo extends Task {
 
     public String printToFile() {
         return super.isDone
-                ? "T | 0 | " + super.name
-                : "T | 1 | " + super.name;
+                ? "T | 1 | " + super.name
+                : "T | 0 | " + super.name;
+    }
+
+    @Override
+    public Task copy() {
+        return new Todo(this.getName(), this.isDone());
     }
 }

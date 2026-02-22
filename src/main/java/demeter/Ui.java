@@ -40,11 +40,14 @@ public class Ui {
      * @param tasks List of tasks to be displayed.
      */
     public void showTasks(TaskList tasks) {
-        lastMessage = "Here are the tasks in your list:";
-        for (int i = 0; i < tasks.size(); i++) {
-            lastMessage += "\n" + (i + 1) + ". " + tasks.get(i).printTask();
+        if (tasks.size() == 0) {
+            lastMessage = "No tasks in your list!";
+        } else {
+            lastMessage = "Here are the tasks in your list:";
+            for (int i = 0; i < tasks.size(); i++) {
+                lastMessage += "\n" + (i + 1) + ". " + tasks.get(i).printTask();
+            }
         }
-
     }
 
     /**

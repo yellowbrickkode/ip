@@ -5,14 +5,13 @@ import java.util.List;
 
 public class TaskList {
 
-    private final List<Task> tasks;
+    private List<Task> tasks;
 
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
     public TaskList(List<Task> tasks) {
-        assert tasks != null : "Task list provided should not be null";
         this.tasks = tasks;
     }
 

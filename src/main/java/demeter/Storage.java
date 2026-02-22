@@ -13,12 +13,10 @@ public class Storage {
 
     public Storage() {
         this.filePath = Paths.get("data", "demeter.txt");
-        assert filePath != null : "File path should not be null";
     }
 
     public List<Task> load() throws IOException {
         List<Task> tasks = new ArrayList<>();
-        assert tasks != null : "Task list should be initialised";
 
         if (!Files.exists(filePath)) {
             return tasks;

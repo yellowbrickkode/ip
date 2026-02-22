@@ -1,5 +1,6 @@
 package demeter;// demeter.Demeter.java
 import java.io.IOException;
+import java.util.Stack;
 
 public class Demeter {
 
@@ -7,6 +8,7 @@ public class Demeter {
     private TaskList tasks;
     private Ui ui;
     private Parser parser;
+    private Stack<TaskList> history;
 
     /**
      * Constructs a new Demeter application instance.
@@ -17,6 +19,7 @@ public class Demeter {
         ui = new Ui();
         storage = new Storage();
         parser = new Parser();
+        history = new Stack<TaskList>();
 
         try {
             tasks = new TaskList(storage.load());
@@ -35,13 +38,12 @@ public class Demeter {
         ui.showWelcome();
         while (true) {
             String input = ui.readCommand();
-
             if (parser.isExit(input)) {
                 break;
             }
 
             try {
-                parser.execute(input, tasks, ui);
+                parser.execute(history, input, tasks, ui);
                 storage.save(tasks.getTasks());
             } catch (DemeterException | IOException e) {
                 ui.showError(e.getMessage());
@@ -67,7 +69,7 @@ public class Demeter {
             return "Bye. Hope to see you again soon!";
         }
         try {
-            parser.execute(input, tasks, ui);   // runs your existing logic
+            parser.execute(history, input, tasks, ui);   // runs your existing logic
             storage.save(tasks.getTasks());     // auto-save like before
             return ui.getLastMessage();         // return what Ui just displayed
 

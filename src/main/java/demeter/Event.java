@@ -30,7 +30,20 @@ public class Event extends Task {
 
     public String printToFile() {
         return super.isDone
-                ? "E | 0 | " + super.name + " | " + this.from + " - " + this.to
-                : "E | 1 | " + super.name + " | " + this.from + " - " + this.to;
+                ? "E | 1 | " + super.name + " | " + this.from + " - " + this.to
+                : "E | 0 | " + super.name + " | " + this.from + " - " + this.to;
+    }
+
+    public LocalDate getFrom() {
+        return this.from;
+    }
+
+    public LocalDate getTo() {
+        return this.to;
+    }
+
+    @Override
+    public Task copy() {
+        return new Event(this.getName(), this.isDone(), this.getFrom().toString(), this.getTo().toString());
     }
 }
