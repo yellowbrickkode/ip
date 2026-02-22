@@ -6,6 +6,7 @@ public class Task {
     public static int idx = 0;
     private int id;
     public Task(String name, boolean done) {
+        assert !name.isEmpty() : "Task name should not be empty";
         this.name = name;
         this.isDone = done;
         this.id = idx ++;
