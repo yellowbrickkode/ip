@@ -1,26 +1,31 @@
 package demeter;// demeter.Ui.java
+
 import java.util.Scanner;
 
+/**
+ * Handles user interaction.
+ * Responsible for reading user input and storing display messages.
+ */
 public class Ui {
 
+    /** Scanner for reading console input. */
     private final Scanner scanner = new Scanner(System.in);
+
+    /** Stores the last message generated for GUI display. */
     private String lastMessage;
 
-    /**
-     * Displays the welcome message.
-     */
+    /** Displays welcome message. */
     public void showWelcome() {
         System.out.println("Hello! I'm Demeter.");
         System.out.println("What can I do for you?");
     }
 
+    /** @return last stored message */
     public String getLastMessage() {
         return lastMessage;
     }
 
-    /**
-     * Displays the goodbye message on exit.
-     */
+    /** Stores goodbye message. */
     public void showBye() {
         lastMessage = "Bye. Hope to see you again soon!";
     }
@@ -34,10 +39,11 @@ public class Ui {
         return scanner.nextLine();
     }
 
+
     /**
-     * Displays the list of tasks.
+     * Displays task list.
      *
-     * @param tasks List of tasks to be displayed.
+     * @param tasks TaskList to display.
      */
     public void showTasks(TaskList tasks) {
         if (tasks.size() == 0) {
@@ -51,7 +57,7 @@ public class Ui {
     }
 
     /**
-     * Displays the message confirming which task has been successfully added.
+     * Displays confirmation of task addition.
      *
      * @param task Task to be added.
      * @param size Total number of tasks in the list after addition.
@@ -63,7 +69,7 @@ public class Ui {
     }
 
     /**
-     * Displays the message confirming which task has been successfully deleted.
+     * Displays confirmation of task deletion.
      *
      * @param task Task to be deleted.
      * @param size Total number of tasks in the list after deletion.
@@ -95,9 +101,7 @@ public class Ui {
     }
 
     /**
-     * Stores a message to be displayed to the user.
-     * The message can later be retrieved via {@code getLastMessage()}
-     * for rendering in the GUI.
+     * Stores a generic message to be displayed to the user.
      *
      * @param message The message to be shown to the user.
      */
@@ -106,7 +110,7 @@ public class Ui {
     }
 
     /**
-     * Display error message.
+     * Stores an error message to be displayed to the user.
      *
      * @param message Error message to be displayed.
      */
@@ -115,7 +119,7 @@ public class Ui {
     }
 
     /**
-     * Display error message when file fails to load.
+     * Stores an error message when file fails to load.
      */
     public void showLoadingError() {
         lastMessage = "Error loading file. Starting with empty task list.";

@@ -1,7 +1,12 @@
 package demeter;// demeter.Demeter.java
+
 import java.io.IOException;
 import java.util.Stack;
 
+/**
+ * Main application class for the Demeter task manager.
+ * Coordinates between UI, parser, storage, and task list.
+ */
 public class Demeter {
 
     private Storage storage;
@@ -62,7 +67,7 @@ public class Demeter {
     }
 
     /**
-     * Generates a response for the user's chat message.
+     * Generates a response for GUI-based interaction.
      */
     public String getResponse(String input) {
         if (parser.isExit(input)) {

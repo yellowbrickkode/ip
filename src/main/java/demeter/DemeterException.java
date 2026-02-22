@@ -1,5 +1,8 @@
 package demeter;
 
+/**
+ * Custom exception class used for command parsing and execution errors.
+ */
 public class DemeterException extends Exception {
 
     /**

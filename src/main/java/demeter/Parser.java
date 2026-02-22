@@ -3,13 +3,35 @@ package demeter;
 import java.util.Stack;
 import java.util.ArrayList;
 
+/**
+ * Parses user input commands and dispatches them to the appropriate handlers.
+ * Responsible for interpreting raw string input and coordinating between
+ * {@link TaskList}, {@link Ui}, and undo history.
+ */
 public class Parser {
 
+    /**
+     * Checks whether the given input corresponds to the exit command.
+     *
+     * @param input User input string.
+     * @return true if the input is the exit command ("bye"), false otherwise.
+     */
     public boolean isExit(String input) {
         assert input != null : "Input to isExit() should not be null";
         return input.equals("bye");
     }
 
+    /**
+     * Executes a user command.
+     * Splits the input into command and arguments, and delegates handling
+     * to the corresponding method.
+     *
+     * @param history Stack storing previous states for undo functionality.
+     * @param input   Raw user input.
+     * @param tasks   Current task list.
+     * @param ui      User interface for displaying output.
+     * @throws DemeterException If the command is invalid or improperly formatted.
+     */
     public void execute(Stack<TaskList> history, String input, TaskList tasks, Ui ui) throws DemeterException {
 
         assert input != null : "Input to execute() should not be null";
@@ -59,6 +81,9 @@ public class Parser {
         }
     }
 
+    /**
+     * Handles the mark command.
+     */
     private void handleMark(String args, TaskList tasks, Ui ui) throws DemeterException {
         int index = getIndex(args);
         assert index >= 0 : "Index for mark should not be negative";
@@ -67,6 +92,9 @@ public class Parser {
         ui.showMark(task);
     }
 
+    /**
+     * Handles the unmark command.
+     */
     private void handleUnmark(String args, TaskList tasks, Ui ui) throws DemeterException {
         int index = getIndex(args);
         assert index >= 0 : "Index for unmark should not be negative";
@@ -75,6 +103,9 @@ public class Parser {
         ui.showUnmark(task);
     }
 
+    /**
+     * Handles the delete command.
+     */
     private void handleDelete(String args, TaskList tasks, Ui ui) throws DemeterException {
         int index = getIndex(args);
         assert index >= 0 : "Index for delete should not be negative";
@@ -83,6 +114,9 @@ public class Parser {
         ui.showDelete(task, tasks.size());
     }
 
+    /**
+     * Handles the todo command.
+     */
     private void handleTodo(String args, TaskList tasks, Ui ui) throws DemeterException {
         assert !args.isEmpty() : "Todo description should not be empty";
         Task task = tasks.add(new Todo(args, false));
@@ -90,6 +124,10 @@ public class Parser {
         ui.showAdd(task, tasks.size());
     }
 
+
+    /**
+     * Handles the deadline command.
+     */
     private void handleDeadline(String args, TaskList tasks, Ui ui) throws DemeterException {
         if (!args.contains("/by")) {
             throw new DemeterException("Oh dear, some fields are missing!");
@@ -102,6 +140,9 @@ public class Parser {
         ui.showAdd(task, tasks.size());
     }
 
+    /**
+     * Handles the event command.
+     */
     private void handleEvent(String args, TaskList tasks, Ui ui) throws DemeterException {
         if (!args.contains("/from") || !args.contains("/to")) {
             throw new DemeterException("Oh dear, some fields are missing!");
@@ -120,6 +161,9 @@ public class Parser {
         ui.showAdd(task, tasks.size());
     }
 
+    /**
+     * Handles the find command by searching tasks that contain the given keyword.
+     */
     private void handleFind(String args, TaskList tasks, Ui ui) {
         String keyword = args.toLowerCase();
         assert !keyword.isEmpty() : "Keyword should not be empty";
@@ -137,6 +181,9 @@ public class Parser {
         ui.showMessage(result.toString());
     }
 
+    /**
+     * Restores the previous state of the task list using the undo history.
+     */
     private void handleUndo(Stack<TaskList> history, TaskList tasks, Ui ui) {
         if (history.isEmpty()) {
             ui.showMessage("Nothing to undo!");
@@ -150,6 +197,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Converts a 1-based user index into a 0-based internal index.
+     *
+     * @param arg String representation of index.
+     * @return Zero-based index.
+     * @throws DemeterException If parsing fails.
+     */
     private int getIndex(String arg) throws DemeterException {
         assert arg != null : "Input to getIndex() should not be null";
         try {
@@ -161,6 +215,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Creates a deep copy of the given TaskList for undo functionality.
+     *
+     * @param tasks TaskList to copy.
+     * @return Copied TaskList.
+     */
     private TaskList copyTaskList(TaskList tasks) {
         ArrayList<Task> copied = new ArrayList<>();
         for (Task t : tasks.getTasks()) {
