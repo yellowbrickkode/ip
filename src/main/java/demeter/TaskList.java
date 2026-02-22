@@ -1,4 +1,5 @@
-package demeter;// demeter.TaskList.java
+package demeter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,84 +7,66 @@ public class TaskList {
 
     private final List<Task> tasks;
 
-    /**
-     * Constructor for TaskList; creates an empty TaskList.
-     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
-    /**
-     * Constructor for TaskList; creates a TaskList given a list of tasks.
-     * @param tasks List of tasks.
-     */
     public TaskList(List<Task> tasks) {
+        assert tasks != null : "Task list provided should not be null";
         this.tasks = tasks;
     }
 
-    /**
-     * Adds a task to the TaskList.
-     * @param task Task to be added.
-     * @return Task that was added.
-     */
     public Task add(Task task) {
+        assert task != null : "Cannot add null task";
         tasks.add(task);
+        assert tasks.contains(task) : "Task should be present after adding";
         return task;
     }
 
-    /**
-     * Deletes a task from the TaskList.
-     * @param index Index of task to be deleted.
-     * @return Task that was deleted.
-     */
     public Task delete(int index) {
-        return tasks.remove(index);
+        assert isValidIndex(index) : "Delete index out of bounds";
+        Task removed = tasks.remove(index);
+        assert removed != null : "Removed task should not be null";
+        return removed;
     }
 
-    /**
-     * Marks a task from the TaskList as completed.
-     * @param index Index of task to be marked as completed.
-     * @return Task that was marked as completed.
-     */
     public Task mark(int index) {
+        assert isValidIndex(index) : "Mark index out of bounds";
         Task task = tasks.get(index);
+        assert task != null : "Task to mark should not be null";
         task.mark();
         return task;
     }
 
-    /**
-     * Marks a task from the TaskList as incomplete.
-     * @param index Index of task to be marked as incomplete.
-     * @return Task that was marked as incomplete.
-     */
     public Task unmark(int index) {
+        assert isValidIndex(index) : "Unmark index out of bounds";
         Task task = tasks.get(index);
+        assert task != null : "Task to unmark should not be null";
         task.unmark();
         return task;
     }
 
-    /**
-     * Gets a task at the specified index.
-     * @param index Index of task to be retrieved.
-     * @return Task that was retrieved.
-     */
     public Task get(int index) {
-        return tasks.get(index);
+        assert isValidIndex(index) : "Get index out of bounds";
+        Task task = tasks.get(index);
+        assert task != null : "Retrieved task should not be null";
+        return task;
     }
 
-    /**
-     * Returns the number of tasks currently in the TaskList.
-     * @return The size of the TaskList.
-     */
     public int size() {
+        assert tasks != null : "Task list should never be null";
         return tasks.size();
     }
 
-    /**
-     * Returns all the tasks in the TaskList.
-     * @return List of all tasks in the TaskList.
-     */
     public List<Task> getTasks() {
-        return new ArrayList<>(tasks);
+        assert tasks != null : "Task list should never be null";
+        return tasks;
+    }
+
+    /**
+     * Checks whether the index is within the valid range.
+     */
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < tasks.size();
     }
 }
