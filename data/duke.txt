@@ -1,0 +1,6 @@
+T | 1 | i
+D | 1 | hlkj | 2026-01-20
+E | 0 | aksjdfnl | 2026-01-20 - 2027-02-28
+D | 0 | essay proposal | 2026-02-20
+T | 1 | book a room
+D | 1 | return book | 2026-03-20
