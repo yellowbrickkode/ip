@@ -40,7 +40,6 @@ public class Demeter {
      * The loop continues until the user issues the exit command.
      */
     public void run() {
-        ui.showWelcome();
         while (true) {
             String input = ui.readCommand();
             if (parser.isExit(input)) {
@@ -74,9 +73,9 @@ public class Demeter {
             return "Bye. Hope to see you again soon!";
         }
         try {
-            parser.execute(history, input, tasks, ui);   // runs your existing logic
-            storage.save(tasks.getTasks());     // auto-save like before
-            return ui.getLastMessage();         // return what Ui just displayed
+            parser.execute(history, input, tasks, ui);
+            storage.save(tasks.getTasks());
+            return ui.getLastMessage();
 
         } catch (DemeterException | IOException e) {
             return e.getMessage();

@@ -14,12 +14,6 @@ public class Ui {
     /** Stores the last message generated for GUI display. */
     private String lastMessage;
 
-    /** Displays welcome message. */
-    public void showWelcome() {
-        System.out.println("Hello! I'm Demeter.");
-        System.out.println("What can I do for you?");
-    }
-
     /** @return last stored message */
     public String getLastMessage() {
         return lastMessage;
@@ -47,12 +41,13 @@ public class Ui {
      */
     public void showTasks(TaskList tasks) {
         if (tasks.size() == 0) {
-            lastMessage = "No tasks in your list!";
+            lastMessage = "No tasks in your list, you're free!";
         } else {
             lastMessage = "Here are the tasks in your list:";
             for (int i = 0; i < tasks.size(); i++) {
                 lastMessage += "\n" + (i + 1) + ". " + tasks.get(i).printTask();
             }
+            lastMessage += "\nYou now have " + tasks.size() + " tasks in the list.";
         }
     }
 
@@ -65,7 +60,7 @@ public class Ui {
     public void showAdd(Task task, int size) {
         lastMessage = "Got it. I've added this task:\n"
                 + "  " + task.printTask() + "\n"
-                + "Now you have " + size + " tasks in the list.";
+                + "You now have " + size + " tasks in the list.";
     }
 
     /**
@@ -77,7 +72,7 @@ public class Ui {
     public void showDelete(Task task, int size) {
         lastMessage = "I've removed this task:\n"
                 + "  " + task.printTask() + "\n"
-                + "Now you have " + size + " tasks in the list.";
+                + "You now have " + size + " tasks in the list.";
     }
 
     /**
@@ -86,7 +81,7 @@ public class Ui {
      * @param task Task to be marked as completed.
      */
     public void showMark(Task task) {
-        lastMessage = "Nice! I've marked this task as done:"
+        lastMessage = "Yay! I've marked this task as done:"
                 + "\n  " + task.printTask();
     }
 
@@ -122,6 +117,6 @@ public class Ui {
      * Stores an error message when file fails to load.
      */
     public void showLoadingError() {
-        lastMessage = "Error loading file. Starting with empty task list.";
+        lastMessage = "You don't seem to have any saved lists of tasks. We'll start with an empty task list.";
     }
 }

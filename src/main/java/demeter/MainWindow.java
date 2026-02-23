@@ -28,6 +28,11 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.getChildren().add(
+                DialogBox.getDemeterDialog(
+                        "Hello! I'm Demeter.\nWhat can I do for you today? \nNote: Refer to the user guide for all available commands!",
+                        demeterImage)
+        );
     }
 
     /** Injects the Duke instance */
